@@ -3,11 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:SafeGuardXUltimate.ViewModels"
         xmlns:views="clr-namespace:SafeGuardXUltimate.Views"
-        Title="SafeGuard X Ultimate" Height="900" Width="1500" WindowStartupLocation="CenterScreen" Background="{StaticResource BgPrimary}">
+        Title="SafeGuard X Ultimate" Height="920" Width="1540" WindowStartupLocation="CenterScreen" Background="{DynamicResource BgPrimary}">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
-            <views:DashboardView />
-        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><views:DashboardView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:AntivirusViewModel}"><views:AntivirusView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:SmartScanViewModel}"><views:SmartScanView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:DeepScanViewModel}"><views:DeepScanView /></DataTemplate>
@@ -23,38 +21,44 @@
         <DataTemplate DataType="{x:Type vm:SystemBoosterViewModel}"><views:SystemBoosterView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:ProcessMonitorViewModel}"><views:ProcessMonitorView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:AISecurityAssistantViewModel}"><views:AISecurityAssistantView /></DataTemplate>
-        <DataTemplate DataType="{x:Type vm:ThreatHunterViewModel}">
-            <views:ThreatHunterView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:ExtraFeaturesViewModel}">
-            <views:ExtraFeaturesView />
-        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ThreatHunterViewModel}"><views:ThreatHunterView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ExtraFeaturesViewModel}"><views:ExtraFeaturesView /></DataTemplate>
     </Window.Resources>
 
     <Grid Margin="14">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="320" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Border Style="{StaticResource PanelBorderStyle}" Padding="16" Margin="0,0,14,0">
-            <StackPanel>
-                <TextBlock Text="SafeGuard X Ultimate" Style="{StaticResource HeadingTextStyle}" />
-                <TextBlock Text="Cyber Security Suite / Demo Simulator" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,16" />
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="SafeGuard X Ultimate" Style="{StaticResource HeadingTextStyle}" />
+                    <TextBlock Text="Enterprise Security Suite (Demo Simulator)" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,16" />
 
-                <Button Content="Dashboard" Command="{Binding NavigateDashboardCommand}" Style="{StaticResource NavButtonStyle}" />
-                <Button Content="Threat Hunter" Command="{Binding NavigateThreatHunterCommand}" Style="{StaticResource NavButtonStyle}" />
-                <Button Content="Extra Features" Command="{Binding NavigateExtrasCommand}" Style="{StaticResource NavButtonStyle}" />
+                    <TextBlock Text="Theme" Foreground="{DynamicResource TextSecondary}" />
+                    <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}" DisplayMemberPath="Name" Margin="0,6,0,8"/>
+                    <Button Content="Apply Theme" Command="{Binding ChangeThemeCommand}" Style="{StaticResource ActionButtonStyle}" />
 
-                <TextBlock Text="Modules" Foreground="{StaticResource TextSecondary}" Margin="0,14,0,8" />
-                <ItemsControl ItemsSource="{Binding Modules}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Content="{Binding Title}" Command="{Binding DataContext.NavigateModuleCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Style="{StaticResource NavButtonStyle}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                    <Separator Margin="0,10"/>
+                    <Button Content="Dashboard" Command="{Binding NavigateDashboardCommand}" Style="{StaticResource NavButtonStyle}" />
+                    <Button Content="Threat Clicker Module" Command="{Binding NavigateThreatHunterCommand}" Style="{StaticResource NavButtonStyle}" />
+                    <Button Content="Extra Features" Command="{Binding NavigateExtrasCommand}" Style="{StaticResource NavButtonStyle}" />
+
+                    <TextBlock Text="Security Modules" Foreground="{DynamicResource TextSecondary}" Margin="0,14,0,8" />
+                </StackPanel>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
+                    <ItemsControl ItemsSource="{Binding Modules}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Title}" Command="{Binding DataContext.NavigateModuleCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Style="{StaticResource NavButtonStyle}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
         </Border>
 
         <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}" Padding="20">

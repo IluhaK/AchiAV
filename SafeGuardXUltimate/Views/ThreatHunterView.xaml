@@ -9,11 +9,11 @@
 
         <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
             <StackPanel>
-                <TextBlock Text="Threat Hunter - clicker mode" Style="{StaticResource HeadingTextStyle}" />
+                <TextBlock Text="Threat Clicker (Integrated Product Module)" Style="{StaticResource HeadingTextStyle}" />
                 <TextBlock Text="Tokens: {Binding Tokens}" Margin="0,8,0,0" />
                 <TextBlock Text="Neutralized: {Binding ThreatsNeutralized}" />
-                <TextBlock Text="Rank: {Binding Rank}" Foreground="{StaticResource AccentGreen}" FontWeight="Bold" />
-                <TextBlock Text="Prestige: {Binding PrestigeLevel}" Foreground="{StaticResource AccentBlue}" FontWeight="Bold" />
+                <TextBlock Text="Rank: {Binding Rank}" Foreground="{DynamicResource AccentSecondary}" FontWeight="Bold" />
+                <TextBlock Text="Prestige: {Binding PrestigeLevel}" Foreground="{DynamicResource AccentPrimary}" FontWeight="Bold" />
                 <TextBlock Text="Boss Level: {Binding BossLevel}" />
 
                 <WrapPanel Margin="0,16,0,0">
@@ -36,8 +36,8 @@
                             <Border BorderBrush="#3345D0FF" BorderThickness="1" CornerRadius="6" Margin="0,6" Padding="8">
                                 <StackPanel>
                                     <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding Description}" Foreground="{StaticResource TextSecondary}"/>
-                                    <TextBlock Text="Level: {Binding Level}" Foreground="{StaticResource AccentBlue}"/>
+                                    <TextBlock Text="{Binding Description}" Foreground="{DynamicResource TextSecondary}"/>
+                                    <TextBlock Text="Level: {Binding Level}" Foreground="{DynamicResource AccentPrimary}"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -48,18 +48,14 @@
 
         <Border Grid.Column="1" Style="{StaticResource CardStyle}">
             <StackPanel>
-                <TextBlock Text="Store" Style="{StaticResource SubHeadingTextStyle}" />
-                <ItemsControl ItemsSource="{Binding ShopItems}">
+                <TextBlock Text="Token Store" Style="{StaticResource SubHeadingTextStyle}" />
+                <ComboBox ItemsSource="{Binding ShopItems}" SelectedItem="{Binding SelectedShopItem}" DisplayMemberPath="Name" Margin="0,8,0,8"/>
+                <Button Content="Buy Selected Cosmetic" Command="{Binding BuyShopItemCommand}" Style="{StaticResource ActionButtonStyle}"/>
+
+                <TextBlock Text="Owned" Style="{StaticResource SubHeadingTextStyle}" Margin="0,14,0,4"/>
+                <ItemsControl ItemsSource="{Binding OwnedCosmetics}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="#3345D0FF" BorderThickness="1" CornerRadius="6" Margin="0,6" Padding="8">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding Rarity}" Foreground="{StaticResource TextSecondary}"/>
-                                    <TextBlock Text="Cost: {Binding Cost}" Foreground="{StaticResource AccentBlue}"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
+                        <DataTemplate><TextBlock Text="•  {Binding}" Margin="0,3" TextWrapping="Wrap"/></DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>

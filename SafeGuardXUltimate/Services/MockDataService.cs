@@ -16,15 +16,16 @@ public sealed class MockDataService
     public IReadOnlyList<ShopItem> GetShopItems() =>
         new List<ShopItem>
         {
-            new() { Name = "Neon Theme", Rarity = "Rare", Cost = 200 },
-            new() { Name = "Crimson Threat Mode", Rarity = "Epic", Cost = 800 },
-            new() { Name = "Holo Avatar Pack", Rarity = "Legendary", Cost = 1500 }
+            new() { Name = "Kaspersky Green Theme", Rarity = "Rare", Cost = 180 },
+            new() { Name = "Neon Matrix Effect Pack", Rarity = "Epic", Cost = 650 },
+            new() { Name = "Premium Shield Cosmetic", Rarity = "Legendary", Cost = 1200 }
         };
 
     public IReadOnlyList<NewsItem> GetNews() =>
         new List<NewsItem>
         {
             new() { Headline = "Global phishing simulator activity spikes", Category = "Threat Intel" },
-            new() { Headline = "Patch Tuesday demo feed updated", Category = "Updates" }
+            new() { Headline = "Patch Tuesday demo feed updated", Category = "Updates" },
+            new() { Headline = "Ransomware behavior patterns detected in training labs", Category = "Labs" }
         };
 }

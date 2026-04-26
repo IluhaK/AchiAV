@@ -20,11 +20,13 @@ public sealed class ThreatHunterViewModel : ObservableObject
     private int _bossLevel = 1;
     private int _loginStreak = 3;
     private string _rank = "Cadet";
+    private ShopItem? _selectedShopItem;
 
     public ThreatHunterViewModel(MockDataService dataService, RewardService rewardService)
     {
         _rewardService = rewardService;
         ShopItems = new ObservableCollection<ShopItem>(dataService.GetShopItems());
+        OwnedCosmetics = new ObservableCollection<string>();
 
         Upgrades = new ObservableCollection<UpgradeItem>
         {
@@ -42,6 +44,7 @@ public sealed class ThreatHunterViewModel : ObservableObject
         FightBossCommand = new RelayCommand(_ => FightBoss());
         ClaimDailyRewardCommand = new RelayCommand(_ => ClaimDailyReward());
         PrestigeCommand = new RelayCommand(_ => Prestige(), _ => ThreatsNeutralized >= 200);
+        BuyShopItemCommand = new RelayCommand(_ => BuyShopItem(), _ => SelectedShopItem is not null && Tokens >= SelectedShopItem.Cost);
     }
 
     public int Tokens { get => _tokens; set => SetProperty(ref _tokens, value); }
@@ -54,6 +57,13 @@ public sealed class ThreatHunterViewModel : ObservableObject
 
     public ObservableCollection<ShopItem> ShopItems { get; }
     public ObservableCollection<UpgradeItem> Upgrades { get; }
+    public ObservableCollection<string> OwnedCosmetics { get; }
+
+    public ShopItem? SelectedShopItem
+    {
+        get => _selectedShopItem;
+        set => SetProperty(ref _selectedShopItem, value);
+    }
 
     public ICommand HuntCommand { get; }
     public ICommand BuyDroneCommand { get; }
@@ -62,6 +72,7 @@ public sealed class ThreatHunterViewModel : ObservableObject
     public ICommand FightBossCommand { get; }
     public ICommand ClaimDailyRewardCommand { get; }
     public ICommand PrestigeCommand { get; }
+    public ICommand BuyShopItemCommand { get; }
 
     private void Hunt()
     {
@@ -122,6 +133,18 @@ public sealed class ThreatHunterViewModel : ObservableObject
     {
         var upgrade = Upgrades.First(u => u.Name == name);
         return upgrade.BaseCost + (upgrade.Level * 25);
+    }
+
+    private void BuyShopItem()
+    {
+        if (SelectedShopItem is null || Tokens < SelectedShopItem.Cost)
+        {
+            return;
+        }
+
+        Tokens -= SelectedShopItem.Cost;
+        OwnedCosmetics.Add($"{SelectedShopItem.Name} ({SelectedShopItem.Rarity}) unlocked");
+        RaisePropertyChanged(nameof(OwnedCosmetics));
     }
 
 }
