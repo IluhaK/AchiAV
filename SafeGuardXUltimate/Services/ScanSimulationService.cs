@@ -8,7 +8,7 @@ namespace SafeGuardXUltimate.Services;
 
 public sealed class ScanSimulationService : IScanSimulationService
 {
-    private static readonly string[] ThreatNames = ["Trojan.Mock", "Adware.Sim", "Fake.Injector", "Demo.Payload"];
+    private static readonly string[] ThreatNames = new[] { "Trojan.Mock", "Adware.Sim", "Fake.Injector", "Demo.Payload" };
 
     public async Task RunScanAsync(string mode, Action<int, string> progressCallback, Action<string> logCallback, CancellationToken cancellationToken)
     {

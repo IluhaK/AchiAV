@@ -3,77 +3,42 @@
 ## 1) Architectural plan
 
 ### Layers
-- **Views**: WPF UserControls and MainWindow. Responsible for premium cyber dashboard visuals, animated scan states, and navigation.
-- **ViewModels (MVVM)**: presentation logic, state transitions, async operations, module settings, clicker economy, and feature hubs.
-- **Models**: immutable or simple data models for threats, logs, achievements, shop items, and news.
-- **Services**: scan simulation engine, mock feed providers, and mini-game economy helpers.
-- **Controls**: custom reusable controls with Dependency Properties (e.g., animated scan ring).
-- **Styles/Animations**: centralized dark premium theme, control templates, and storyboards.
+- **Views**: WPF UserControls and MainWindow. Premium cyber dashboard, module pages, mini-game, feature center.
+- **ViewModels (MVVM)**: navigation state, async scans, activity monitor, clicker economy, battle-pass style settings.
+- **Models**: threat cards, scan logs, achievements, upgrades, activity events, shop/news entries.
+- **Services**: scan simulation, rewards economy, and activity feed providers.
+- **Controls**: reusable controls with Dependency Properties (`AnimatedRingControl`).
+- **Styles/Animations**: dark premium theme, shared control styles, storyboards.
 
 ### Runtime flow
-1. `MainViewModel` creates and owns all page-level ViewModels.
-2. Sidebar commands switch `CurrentViewModel`.
-3. `MainWindow` uses typed `DataTemplate` routing to load module-specific pages.
-4. `DashboardViewModel` calls `ScanSimulationService` (`async/await`) for Quick/Full/Deep scans.
-5. During Deep Scan, `CriticalEffectsEnabled` toggles cinematic threat overlay for 10-15 sec.
-6. Threat Hunter and Extra Features are separate gameplay/utility subsystems.
-
-### Scalability decisions
-- All modules inherit `ModuleViewModelBase` to standardize settings and simulations.
-- Module pages are separate controls for independent future customization.
-- Style dictionaries isolate visual language from logic.
-- Services are interface-driven for future replacement with real telemetry.
+1. `MainViewModel` composes all major feature ViewModels.
+2. Sidebar buttons switch pages via `CurrentViewModel`.
+3. `MainWindow.xaml` DataTemplates route to dedicated views.
+4. `DashboardViewModel` запускает async scan simulation (quick/full/deep) with progress + counters.
+5. Deep scan enables temporary cinematic critical effects (12s) and then hides them.
+6. Threat Hunter handles clicker gameplay (tokens, upgrades, bosses, prestige).
+7. Extra Features panel handles fake VPN/game mode/silent mode/battle-pass demo/security feed.
 
 ## 2) File structure
 
 ```text
 SafeGuardXUltimate/
-├─ Animations/
-│  └─ ScanAnimations.xaml
-├─ Assets/
-├─ Commands/
-│  ├─ AsyncRelayCommand.cs
-│  └─ RelayCommand.cs
-├─ Controls/
-│  ├─ AnimatedRingControl.xaml
-│  └─ AnimatedRingControl.xaml.cs
-├─ Converters/
-│  └─ BoolToVisibilityConverter.cs
-├─ Models/
-│  ├─ Achievement.cs
-│  ├─ NewsItem.cs
-│  ├─ ScanLogEntry.cs
-│  ├─ SecurityModule.cs
-│  ├─ ShopItem.cs
-│  └─ ThreatItem.cs
-├─ Services/
-│  ├─ IScanSimulationService.cs
-│  ├─ MockDataService.cs
-│  ├─ ScanSimulationService.cs
-│  └─ ThreatHunterService.cs
-├─ Styles/
-│  ├─ Controls.xaml
-│  └─ Theme.xaml
-├─ ViewModels/
-│  ├─ ObservableObject.cs
-│  ├─ MainViewModel.cs
-│  ├─ DashboardViewModel.cs
-│  ├─ ModuleViewModelBase.cs
-│  ├─ ThreatHunterViewModel.cs
-│  ├─ ExtraFeaturesViewModel.cs
-│  └─ [15 module-specific ViewModels]
-├─ Views/
-│  ├─ DashboardView.xaml(.cs)
-│  ├─ ModuleView.xaml(.cs)
-│  ├─ ThreatHunterView.xaml(.cs)
-│  ├─ ExtraFeaturesView.xaml(.cs)
-│  └─ [15 module-specific Views]
+├─ Animations/         # Storyboards
+├─ Assets/             # Ready for images/icons/video assets
+├─ Commands/           # RelayCommand + AsyncRelayCommand
+├─ Controls/           # Custom DependencyProperty controls
+├─ Converters/         # BoolToVisibility
+├─ Models/             # Domain models
+├─ Services/           # Simulation/data/economy services
+├─ Styles/             # Theme + control styles
+├─ ViewModels/         # MVVM state/logic
+├─ Views/              # Dashboard + module pages + mini-game + extras
 ├─ App.xaml(.cs)
 ├─ MainWindow.xaml(.cs)
 └─ SafeGuardXUltimate.csproj
 ```
 
-## 3) Implemented modules
+## 3) Implemented modules (15)
 1. Antivirus
 2. Smart Scan
 3. Deep Scan
@@ -90,14 +55,17 @@ SafeGuardXUltimate/
 14. Process Monitor
 15. AI Security Assistant
 
-## Extra features implemented
+## 4) Extra features
 - Achievements
-- Daily rewards (feature slot)
+- Daily rewards
 - Rank system
-- Battle pass demo (feature slot)
-- Fake VPN module (feature slot)
+- Battle pass demo
+- Fake VPN module
 - Game mode
 - Silent mode
-- Threat map
+- Threat map feed
 - Security news
 - Performance monitor
+
+## 5) Safety note
+This project is intentionally **fake/simulated** and is built only for UI/game demonstration. It performs no real antivirus or destructive actions.

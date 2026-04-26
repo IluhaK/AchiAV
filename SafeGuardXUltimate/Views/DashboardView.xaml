@@ -16,12 +16,26 @@
             <TextBlock Text="{Binding SecurityScore}" Foreground="{StaticResource AccentBlue}" FontSize="24" FontWeight="Bold" />
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,16,0,16">
-            <Button Content="Quick Scan" Command="{Binding QuickScanCommand}" Style="{StaticResource ActionButtonStyle}" />
-            <Button Content="Full Scan" Command="{Binding FullScanCommand}" Style="{StaticResource ActionButtonStyle}" />
-            <Button Content="Deep Scan" Command="{Binding DeepScanCommand}" Style="{StaticResource ActionButtonStyle}" />
-            <controls:AnimatedRingControl Width="90" Height="90" Progress="{Binding Progress}" Margin="30,0,0,0" />
-        </StackPanel>
+        <Grid Grid.Row="1" Margin="0,16,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Quick Scan" Command="{Binding QuickScanCommand}" Style="{StaticResource ActionButtonStyle}" />
+                <Button Content="Full Scan" Command="{Binding FullScanCommand}" Style="{StaticResource ActionButtonStyle}" />
+                <Button Content="Deep Scan" Command="{Binding DeepScanCommand}" Style="{StaticResource ActionButtonStyle}" />
+                <controls:AnimatedRingControl Width="90" Height="90" Progress="{Binding Progress}" Margin="30,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Border Style="{StaticResource CardStyle}" Margin="4,0" Width="110"><StackPanel><TextBlock Text="Files"/><TextBlock Text="{Binding FilesScanned}"/></StackPanel></Border>
+                <Border Style="{StaticResource CardStyle}" Margin="4,0" Width="110"><StackPanel><TextBlock Text="Processes"/><TextBlock Text="{Binding ProcessesScanned}"/></StackPanel></Border>
+                <Border Style="{StaticResource CardStyle}" Margin="4,0" Width="110"><StackPanel><TextBlock Text="Detected"/><TextBlock Text="{Binding ThreatsDetected}"/></StackPanel></Border>
+                <Border Style="{StaticResource CardStyle}" Margin="4,0" Width="110"><StackPanel><TextBlock Text="Neutralized"/><TextBlock Text="{Binding ThreatsNeutralized}"/></StackPanel></Border>
+            </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -29,19 +43,42 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
-                <StackPanel>
-                    <TextBlock Text="Scan log" Style="{StaticResource SubHeadingTextStyle}" />
-                    <TextBlock Text="{Binding CurrentTarget}" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8" />
-                    <ListBox ItemsSource="{Binding ScanLog}" Height="420">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Message}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </Border>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,12,12">
+                    <StackPanel>
+                        <TextBlock Text="Scan log" Style="{StaticResource SubHeadingTextStyle}" />
+                        <TextBlock Text="{Binding CurrentTarget}" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8" />
+                        <ListBox ItemsSource="{Binding ScanLog}" Height="300">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Message}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="Activity Monitor / Live Graph" Style="{StaticResource SubHeadingTextStyle}" />
+                        <ItemsControl ItemsSource="{Binding LiveMetrics}" Margin="0,8,0,0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="8" Height="{Binding}" Background="#6645D0FF" Margin="1,0" VerticalAlignment="Bottom"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </Grid>
 
             <StackPanel Grid.Column="1">
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
@@ -51,8 +88,24 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Background="#22FF4D4D" Margin="0,4" Padding="8" CornerRadius="8">
-                                        <TextBlock Text="{Binding Name}" />
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Path}" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                                        </StackPanel>
                                     </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="Recent activity" Style="{StaticResource SubHeadingTextStyle}" />
+                        <ItemsControl ItemsSource="{Binding Activities}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Message}" Margin="0,3" TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -62,7 +115,7 @@
                 <Border Style="{StaticResource CardStyle}">
                     <Grid Visibility="{Binding CriticalEffectsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Rectangle Fill="#55FF2A2A" RadiusX="12" RadiusY="12" />
-                        <TextBlock Text="CRITICAL THREAT MODE ACTIVE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Foreground="White" />
+                        <TextBlock Text="CRITICAL THREAT MODE ACTIVE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Foreground="White" TextAlignment="Center" />
                     </Grid>
                 </Border>
             </StackPanel>

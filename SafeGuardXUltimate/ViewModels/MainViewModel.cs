@@ -14,17 +14,28 @@ public sealed class MainViewModel : ObservableObject
         var scan = new ScanSimulationService();
         var mock = new MockDataService();
 
-        Dashboard = new DashboardViewModel(scan);
-        ThreatHunter = new ThreatHunterViewModel(mock);
+        Dashboard = new DashboardViewModel(scan, new ActivityFeedService());
+        ThreatHunter = new ThreatHunterViewModel(mock, new RewardService());
         ExtraFeatures = new ExtraFeaturesViewModel(mock);
 
-        Modules = new ObservableCollection<ModuleViewModelBase>
-        [
-            new AntivirusViewModel(), new SmartScanViewModel(), new DeepScanViewModel(), new FirewallCenterViewModel(),
-            new WebProtectionViewModel(), new PrivacyGuardViewModel(), new RansomwareShieldViewModel(), new SafeBankingViewModel(),
-            new WiFiInspectorViewModel(), new USBMonitorViewModel(), new VulnerabilityScannerViewModel(), new PasswordVaultDemoViewModel(),
-            new SystemBoosterViewModel(), new ProcessMonitorViewModel(), new AISecurityAssistantViewModel()
-        ];
+        Modules = new ObservableCollection<ModuleViewModelBase>(new ModuleViewModelBase[]
+        {
+            new AntivirusViewModel(),
+            new SmartScanViewModel(),
+            new DeepScanViewModel(),
+            new FirewallCenterViewModel(),
+            new WebProtectionViewModel(),
+            new PrivacyGuardViewModel(),
+            new RansomwareShieldViewModel(),
+            new SafeBankingViewModel(),
+            new WiFiInspectorViewModel(),
+            new USBMonitorViewModel(),
+            new VulnerabilityScannerViewModel(),
+            new PasswordVaultDemoViewModel(),
+            new SystemBoosterViewModel(),
+            new ProcessMonitorViewModel(),
+            new AISecurityAssistantViewModel()
+        });
 
         NavigateDashboardCommand = new RelayCommand(_ => CurrentViewModel = Dashboard);
         NavigateThreatHunterCommand = new RelayCommand(_ => CurrentViewModel = ThreatHunter);
@@ -39,7 +50,11 @@ public sealed class MainViewModel : ObservableObject
     public ExtraFeaturesViewModel ExtraFeatures { get; }
     public ObservableCollection<ModuleViewModelBase> Modules { get; }
 
-    public object? CurrentViewModel { get => _currentViewModel; set => SetProperty(ref _currentViewModel, value); }
+    public object? CurrentViewModel
+    {
+        get => _currentViewModel;
+        set => SetProperty(ref _currentViewModel, value);
+    }
 
     public ICommand NavigateDashboardCommand { get; }
     public ICommand NavigateThreatHunterCommand { get; }

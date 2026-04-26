@@ -10,7 +10,17 @@
         <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
             <StackPanel>
                 <TextBlock Text="Gamification and utility features" Style="{StaticResource HeadingTextStyle}" />
-                <ItemsControl ItemsSource="{Binding Features}">
+                <WrapPanel Margin="0,8,0,8">
+                    <CheckBox Content="Game Mode" IsChecked="{Binding GameModeEnabled}" Margin="0,0,16,0"/>
+                    <CheckBox Content="Silent Mode" IsChecked="{Binding SilentModeEnabled}" Margin="0,0,16,0"/>
+                    <CheckBox Content="Fake VPN" IsChecked="{Binding VpnEnabled}"/>
+                </WrapPanel>
+
+                <TextBlock Text="Battle Pass level" />
+                <Slider Minimum="1" Maximum="60" Value="{Binding BattlePassLevel}" />
+                <TextBlock Text="{Binding BattlePassLevel, StringFormat=Current tier: {0}}" Foreground="{StaticResource AccentBlue}" />
+
+                <ItemsControl ItemsSource="{Binding Features}" Margin="0,10,0,0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="•  {Binding}" Margin="0,6" />
@@ -31,7 +41,7 @@
 
         <Border Grid.Column="1" Style="{StaticResource CardStyle}">
             <StackPanel>
-                <TextBlock Text="Security News" Style="{StaticResource SubHeadingTextStyle}" />
+                <TextBlock Text="Security News / Threat Map Feed" Style="{StaticResource SubHeadingTextStyle}" />
                 <ItemsControl ItemsSource="{Binding News}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
