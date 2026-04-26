@@ -21,6 +21,7 @@ public sealed class DashboardViewModel : ObservableObject
     private string _currentTarget = "Idle";
     private string _scanStatus = "Ready";
     private bool _criticalEffectsEnabled;
+    private bool _scanEffectsVisible;
     private int _securityScore = 97;
     private int _filesScanned;
     private int _processesScanned;
@@ -62,6 +63,7 @@ public sealed class DashboardViewModel : ObservableObject
     public string CurrentTarget { get => _currentTarget; set => SetProperty(ref _currentTarget, value); }
     public string ScanStatus { get => _scanStatus; set => SetProperty(ref _scanStatus, value); }
     public bool CriticalEffectsEnabled { get => _criticalEffectsEnabled; set => SetProperty(ref _criticalEffectsEnabled, value); }
+    public bool ScanEffectsVisible { get => _scanEffectsVisible; set => SetProperty(ref _scanEffectsVisible, value); }
 
     public int FilesScanned { get => _filesScanned; set => SetProperty(ref _filesScanned, value); }
     public int ProcessesScanned { get => _processesScanned; set => SetProperty(ref _processesScanned, value); }
@@ -107,6 +109,8 @@ public sealed class DashboardViewModel : ObservableObject
         ThreatsDetected = 0;
         ThreatsNeutralized = 0;
         ScanStatus = $"{mode} scan started";
+
+        ScanEffectsVisible = true;
 
         if (enableEffects)
         {
@@ -156,6 +160,7 @@ public sealed class DashboardViewModel : ObservableObject
         ScanStatus = $"{mode} scan completed";
         LastScanReport = BuildScanReport(mode);
         CriticalEffectsEnabled = false;
+        ScanEffectsVisible = false;
     }
 
     private async System.Threading.Tasks.Task RunVulnerabilityScanAsync()

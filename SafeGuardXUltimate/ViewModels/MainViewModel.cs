@@ -31,7 +31,7 @@ public sealed class MainViewModel : ObservableObject
         });
 
         Themes = new ObservableCollection<AppThemeOption>(_themeService.GetThemes());
-        SelectedTheme = Themes[1];
+        SelectedTheme = Themes[0];
 
         NavigateDashboardCommand = new RelayCommand(_ => CurrentViewModel = Dashboard);
         NavigateThreatHunterCommand = new RelayCommand(_ => CurrentViewModel = ThreatHunter);

@@ -1,10 +1,10 @@
 # SafeGuard X Ultimate (Demo Simulator)
 
 ## Architectural focus
-This demo intentionally simulates a premium commercial antivirus UX with realistic behavior patterns (statuses, logs, reports, counters, module settings, notifications) while staying 100% safe and non-destructive.
+This demo simulates a commercial antivirus UX with realistic statuses, logs, counters, settings panels and reports while staying 100% safe.
 
-## Implemented realistic simulation modules
-- Quick Scan / Full Scan / Deep Scan
+## Realistic simulation modules
+- Quick / Full / Deep Scan
 - Real-Time Protection
 - Firewall Monitor
 - Web Protection
@@ -13,21 +13,18 @@ This demo intentionally simulates a premium commercial antivirus UX with realist
 - Privacy Protection
 - Update Center
 
-## What now looks “production-like”
-- multi-stage scan status flow and pseudo file/process analysis
-- believable threat detection and quarantine events
-- live security notifications and activity stream
-- detailed post-scan report generation
-- vulnerability findings panel with recommendations
-- enterprise-like settings toggles and update channel controls
-- built-in Threat Clicker product module (tokens, upgrades, auto income, multipliers, cosmetic shop)
-- runtime theme switching:
-  - Kaspersky-style green
-  - Dark premium
-  - Blue enterprise
-  - Cyber neon
-  - Red alert
+## Clicker module
+Integrated **Token Clicker** (not a separate game):
+- manual threat clicks for tokens
+- click upgrades
+- auto token mining
+- multiplier upgrades
+- cosmetic/theme store purchases for tokens
+
+## Visual realism
+- Kaspersky-style default theme + 4 switchable themes
+- premium control styles, hover/press interactions, switch-like toggles
+- safe scan visual effects (matrix/digital interference/red alert overlays) shown only during scan and hidden after completion
 
 ## Safety
-This project is **UI/game simulation only**.
-No real malware handling, no system modifications, no destructive or stealth behavior.
+UI simulation only. No real malware actions, no destructive payloads, no system-level interference.

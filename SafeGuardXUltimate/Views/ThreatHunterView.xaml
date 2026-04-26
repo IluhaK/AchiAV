@@ -9,40 +9,32 @@
 
         <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
             <StackPanel>
-                <TextBlock Text="Threat Clicker (Integrated Product Module)" Style="{StaticResource HeadingTextStyle}" />
-                <TextBlock Text="Tokens: {Binding Tokens}" Margin="0,8,0,0" />
-                <TextBlock Text="Neutralized: {Binding ThreatsNeutralized}" />
-                <TextBlock Text="Rank: {Binding Rank}" Foreground="{DynamicResource AccentSecondary}" FontWeight="Bold" />
-                <TextBlock Text="Prestige: {Binding PrestigeLevel}" Foreground="{DynamicResource AccentPrimary}" FontWeight="Bold" />
-                <TextBlock Text="Boss Level: {Binding BossLevel}" />
+                <TextBlock Text="Threat Clicker (Security Productivity Module)" Style="{StaticResource HeadingTextStyle}" />
+                <TextBlock Text="Tokens: {Binding Tokens}" Margin="0,8,0,0" FontSize="20" FontWeight="SemiBold"/>
+                <TextBlock Text="Status: {Binding Status}" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
 
-                <WrapPanel Margin="0,16,0,0">
-                    <Button Content="Neutralize threat" Command="{Binding HuntCommand}" Style="{StaticResource ActionButtonStyle}" Width="170" Margin="0,0,10,10"/>
-                    <Button Content="Fight Boss" Command="{Binding FightBossCommand}" Style="{StaticResource ActionButtonStyle}" Width="130" Margin="0,0,10,10"/>
-                    <Button Content="Daily reward" Command="{Binding ClaimDailyRewardCommand}" Style="{StaticResource ActionButtonStyle}" Width="150" Margin="0,0,10,10"/>
-                    <Button Content="Prestige" Command="{Binding PrestigeCommand}" Style="{StaticResource ActionButtonStyle}" Width="110" Margin="0,0,10,10"/>
-                </WrapPanel>
+                <Button Content="Neutralize threat event" Command="{Binding ClickThreatCommand}" Style="{StaticResource ActionButtonStyle}" Width="240" Margin="0,0,0,12"/>
 
-                <TextBlock Text="Upgrades" Style="{StaticResource SubHeadingTextStyle}" Margin="0,8,0,8" />
-                <WrapPanel>
-                    <Button Content="Scan Drone" Command="{Binding BuyDroneCommand}" Style="{StaticResource ActionButtonStyle}" Width="130" Margin="0,0,10,10"/>
-                    <Button Content="AI Defender" Command="{Binding BuyAiCommand}" Style="{StaticResource ActionButtonStyle}" Width="130" Margin="0,0,10,10"/>
-                    <Button Content="Quantum Shield" Command="{Binding BuyQuantumCommand}" Style="{StaticResource ActionButtonStyle}" Width="140" Margin="0,0,10,10"/>
-                </WrapPanel>
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <TextBlock Text="Click Power" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding ClickPower}" Margin="8,0" VerticalAlignment="Center"/>
+                    <Button Grid.Column="2" Content="Upgrade" Command="{Binding UpgradeClickCommand}" Style="{StaticResource ActionButtonStyle}" Width="90"/>
+                </Grid>
 
-                <ItemsControl ItemsSource="{Binding Upgrades}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="#3345D0FF" BorderThickness="1" CornerRadius="6" Margin="0,6" Padding="8">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding Description}" Foreground="{DynamicResource TextSecondary}"/>
-                                    <TextBlock Text="Level: {Binding Level}" Foreground="{DynamicResource AccentPrimary}"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <TextBlock Text="Auto Mining (/s)" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding AutoTokensPerTick}" Margin="8,0" VerticalAlignment="Center"/>
+                    <Button Grid.Column="2" Content="Upgrade" Command="{Binding UpgradeAutoCommand}" Style="{StaticResource ActionButtonStyle}" Width="90"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <TextBlock Text="Multiplier" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Multiplier, StringFormat=x{0}}" Margin="8,0" VerticalAlignment="Center"/>
+                    <Button Grid.Column="2" Content="Upgrade" Command="{Binding UpgradeMultiplierCommand}" Style="{StaticResource ActionButtonStyle}" Width="90"/>
+                </Grid>
             </StackPanel>
         </Border>
 
@@ -50,9 +42,9 @@
             <StackPanel>
                 <TextBlock Text="Token Store" Style="{StaticResource SubHeadingTextStyle}" />
                 <ComboBox ItemsSource="{Binding ShopItems}" SelectedItem="{Binding SelectedShopItem}" DisplayMemberPath="Name" Margin="0,8,0,8"/>
-                <Button Content="Buy Selected Cosmetic" Command="{Binding BuyShopItemCommand}" Style="{StaticResource ActionButtonStyle}"/>
+                <Button Content="Buy Selected" Command="{Binding BuyShopItemCommand}" Style="{StaticResource ActionButtonStyle}"/>
 
-                <TextBlock Text="Owned" Style="{StaticResource SubHeadingTextStyle}" Margin="0,14,0,4"/>
+                <TextBlock Text="Unlocked cosmetics" Style="{StaticResource SubHeadingTextStyle}" Margin="0,14,0,4"/>
                 <ItemsControl ItemsSource="{Binding OwnedCosmetics}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate><TextBlock Text="•  {Binding}" Margin="0,3" TextWrapping="Wrap"/></DataTemplate>

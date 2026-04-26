@@ -43,7 +43,7 @@
 
                     <Separator Margin="0,10"/>
                     <Button Content="Dashboard" Command="{Binding NavigateDashboardCommand}" Style="{StaticResource NavButtonStyle}" />
-                    <Button Content="Threat Clicker Module" Command="{Binding NavigateThreatHunterCommand}" Style="{StaticResource NavButtonStyle}" />
+                    <Button Content="Token Clicker" Command="{Binding NavigateThreatHunterCommand}" Style="{StaticResource NavButtonStyle}" />
                     <Button Content="Extra Features" Command="{Binding NavigateExtrasCommand}" Style="{StaticResource NavButtonStyle}" />
 
                     <TextBlock Text="Security Modules" Foreground="{DynamicResource TextSecondary}" Margin="0,14,0,8" />
