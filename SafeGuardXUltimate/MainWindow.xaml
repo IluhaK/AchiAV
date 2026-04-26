@@ -1,0 +1,64 @@
+<Window x:Class="SafeGuardXUltimate.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SafeGuardXUltimate.ViewModels"
+        xmlns:views="clr-namespace:SafeGuardXUltimate.Views"
+        Title="SafeGuard X Ultimate" Height="900" Width="1500" WindowStartupLocation="CenterScreen" Background="{StaticResource BgPrimary}">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AntivirusViewModel}"><views:AntivirusView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SmartScanViewModel}"><views:SmartScanView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DeepScanViewModel}"><views:DeepScanView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FirewallCenterViewModel}"><views:FirewallCenterView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:WebProtectionViewModel}"><views:WebProtectionView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PrivacyGuardViewModel}"><views:PrivacyGuardView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RansomwareShieldViewModel}"><views:RansomwareShieldView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SafeBankingViewModel}"><views:SafeBankingView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:WiFiInspectorViewModel}"><views:WiFiInspectorView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:USBMonitorViewModel}"><views:USBMonitorView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:VulnerabilityScannerViewModel}"><views:VulnerabilityScannerView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PasswordVaultDemoViewModel}"><views:PasswordVaultDemoView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SystemBoosterViewModel}"><views:SystemBoosterView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProcessMonitorViewModel}"><views:ProcessMonitorView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AISecurityAssistantViewModel}"><views:AISecurityAssistantView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ThreatHunterViewModel}">
+            <views:ThreatHunterView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ExtraFeaturesViewModel}">
+            <views:ExtraFeaturesView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid Margin="14">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Style="{StaticResource PanelBorderStyle}" Padding="16" Margin="0,0,14,0">
+            <StackPanel>
+                <TextBlock Text="SafeGuard X Ultimate" Style="{StaticResource HeadingTextStyle}" />
+                <TextBlock Text="Cyber Security Suite / Demo Simulator" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,16" />
+
+                <Button Content="Dashboard" Command="{Binding NavigateDashboardCommand}" Style="{StaticResource NavButtonStyle}" />
+                <Button Content="Threat Hunter" Command="{Binding NavigateThreatHunterCommand}" Style="{StaticResource NavButtonStyle}" />
+                <Button Content="Extra Features" Command="{Binding NavigateExtrasCommand}" Style="{StaticResource NavButtonStyle}" />
+
+                <TextBlock Text="Modules" Foreground="{StaticResource TextSecondary}" Margin="0,14,0,8" />
+                <ItemsControl ItemsSource="{Binding Modules}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Title}" Command="{Binding DataContext.NavigateModuleCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Style="{StaticResource NavButtonStyle}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}" Padding="20">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Border>
+    </Grid>
+</Window>

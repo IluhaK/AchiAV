@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Storyboard x:Key="PulseGlowStoryboard" RepeatBehavior="Forever" AutoReverse="True">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.55" To="1" Duration="0:0:1.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="ThreatAlertStoryboard" RepeatBehavior="Forever">
+        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" To="#AA4411" Duration="0:0:0.4" AutoReverse="True" />
+    </Storyboard>
+</ResourceDictionary>

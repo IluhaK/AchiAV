@@ -1,0 +1,28 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:conv="clr-namespace:SafeGuardXUltimate.Converters">
+    <Color x:Key="ColorBgPrimary">#0B1017</Color>
+    <Color x:Key="ColorPanel">#111927</Color>
+    <Color x:Key="ColorAccentBlue">#45D0FF</Color>
+    <Color x:Key="ColorAccentGreen">#31F2A3</Color>
+
+    <SolidColorBrush x:Key="BgPrimary" Color="{StaticResource ColorBgPrimary}" />
+    <SolidColorBrush x:Key="PanelBrush" Color="{StaticResource ColorPanel}" />
+    <SolidColorBrush x:Key="AccentBlue" Color="{StaticResource ColorAccentBlue}" />
+    <SolidColorBrush x:Key="AccentGreen" Color="{StaticResource ColorAccentGreen}" />
+    <SolidColorBrush x:Key="TextSecondary" Color="#9DB0C9" />
+
+    <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+
+    <Style x:Key="HeadingTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="SubHeadingTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+</ResourceDictionary>

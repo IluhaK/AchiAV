@@ -1,0 +1,44 @@
+<UserControl x:Class="SafeGuardXUltimate.Views.ThreatHunterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+            <StackPanel>
+                <TextBlock Text="Threat Hunter - clicker mode" Style="{StaticResource HeadingTextStyle}" />
+                <TextBlock Text="Tokens: {Binding Tokens}" Margin="0,8,0,0" />
+                <TextBlock Text="Neutralized: {Binding ThreatsNeutralized}" />
+                <TextBlock Text="Rank: {Binding Rank}" Foreground="{StaticResource AccentGreen}" FontWeight="Bold" />
+                <Button Content="Neutralize threat" Command="{Binding HuntCommand}" Style="{StaticResource ActionButtonStyle}" Width="200" Margin="0,16,0,0"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button Content="Buy Scan Drone (50)" Command="{Binding BuyDroneCommand}" Style="{StaticResource ActionButtonStyle}" Width="180"/>
+                    <Button Content="Buy AI Defender (120)" Command="{Binding BuyAiCommand}" Style="{StaticResource ActionButtonStyle}" Width="190"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+            <StackPanel>
+                <TextBlock Text="Store" Style="{StaticResource SubHeadingTextStyle}" />
+                <ItemsControl ItemsSource="{Binding ShopItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#3345D0FF" BorderThickness="1" CornerRadius="6" Margin="0,6" Padding="8">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Rarity}" Foreground="{StaticResource TextSecondary}"/>
+                                    <TextBlock Text="{Binding Cost}" Foreground="{StaticResource AccentBlue}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

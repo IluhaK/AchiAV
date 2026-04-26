@@ -1,0 +1,71 @@
+<UserControl x:Class="SafeGuardXUltimate.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SafeGuardXUltimate.Controls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Protection Status: " Style="{StaticResource HeadingTextStyle}" />
+            <TextBlock Text="SECURED" Foreground="{StaticResource AccentGreen}" FontSize="24" FontWeight="Bold" />
+            <TextBlock Text="   Security Score:" Margin="20,0,0,0" Style="{StaticResource HeadingTextStyle}" />
+            <TextBlock Text="{Binding SecurityScore}" Foreground="{StaticResource AccentBlue}" FontSize="24" FontWeight="Bold" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,16,0,16">
+            <Button Content="Quick Scan" Command="{Binding QuickScanCommand}" Style="{StaticResource ActionButtonStyle}" />
+            <Button Content="Full Scan" Command="{Binding FullScanCommand}" Style="{StaticResource ActionButtonStyle}" />
+            <Button Content="Deep Scan" Command="{Binding DeepScanCommand}" Style="{StaticResource ActionButtonStyle}" />
+            <controls:AnimatedRingControl Width="90" Height="90" Progress="{Binding Progress}" Margin="30,0,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+                <StackPanel>
+                    <TextBlock Text="Scan log" Style="{StaticResource SubHeadingTextStyle}" />
+                    <TextBlock Text="{Binding CurrentTarget}" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8" />
+                    <ListBox ItemsSource="{Binding ScanLog}" Height="420">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Message}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Column="1">
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="Threats" Style="{StaticResource SubHeadingTextStyle}" />
+                        <ItemsControl ItemsSource="{Binding Threats}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#22FF4D4D" Margin="0,4" Padding="8" CornerRadius="8">
+                                        <TextBlock Text="{Binding Name}" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}">
+                    <Grid Visibility="{Binding CriticalEffectsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Rectangle Fill="#55FF2A2A" RadiusX="12" RadiusY="12" />
+                        <TextBlock Text="CRITICAL THREAT MODE ACTIVE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold" Foreground="White" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
